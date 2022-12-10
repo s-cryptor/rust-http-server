@@ -23,6 +23,16 @@ impl<T> Deref for MyBox<T> {
     }
 }
 
+struct CustomSmartPointer {
+    data: String,
+}
+
+impl Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+    }
+}
+
 fn main() {
     let b = Box::new(5);
     println!("b = {}", b);
@@ -37,6 +47,15 @@ fn main() {
 
     let m = MyBox::new(String::from("Rust"));
     hello(&m);
+
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+    drop(c);
+    let d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
+    println!("CustomSmartPointers created.");
 }
 
 fn hello(name: &str) {
