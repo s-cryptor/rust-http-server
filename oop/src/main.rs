@@ -30,6 +30,18 @@ impl AveragedCollection {
     }
 }
 
+use oop::{Button, Screen};
+
 fn main() {
-    println!("Hello, world!");
+    let screen = Screen {
+        components: vec![
+            Box::new(Button {
+                width: 50,
+                height: 10,
+                label: String::from("OK"),
+            }),
+        ],
+    };
+
+    screen.run();
 }
