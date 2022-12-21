@@ -1,5 +1,8 @@
 use std::slice;
 
+static HELLO_WORLD: &str = "Hello, world";
+static mut COUNTER: u32 = 0;
+
 fn main() {
     let mut num = 5;
     let r1 = &num as *const i32;
@@ -28,6 +31,14 @@ fn main() {
     unsafe {
         println!("Absolute value of -3 according to C: {}", abs(-3));
     }
+
+    println!("name is: {}", HELLO_WORLD);
+
+    add_to_count(3);
+
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
+    }
 }
 
 fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
@@ -51,4 +62,10 @@ extern "C" {
 #[no_mangle]
 pub extern "C" fn call_from_c() {
     println!("Just called a Rust function from C!");
+}
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
 }
